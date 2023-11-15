@@ -6,7 +6,7 @@ import API.VodafoneCashAPI;
 import Bill.Bill;
 import User.Account;
 
-public class VodafoneCash extends WalletProvider{
+public class VodafoneCash extends WalletProvider {
     public Double inquireBalance(Account account) {
         final Map<Object, Object> response = VodafoneCashAPI.inquireBalance(account.getData("number").toString());
         return (Double) response.get("balance");
@@ -24,7 +24,8 @@ public class VodafoneCash extends WalletProvider{
     }
 
     @java.lang.Override
-    public Map<Object, Object> accountExists(Account account) {
-        return VodafoneCashAPI.accountExists(account.getData("number").toString());
+    public boolean accountExists(Account account) {
+        Map<Object, Object> response = VodafoneCashAPI.accountExists(account.getData("number").toString());
+        return response.get("exists") == "true";
     }
 }
