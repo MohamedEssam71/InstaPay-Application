@@ -4,7 +4,7 @@ import Application.Database;
 import Utility.PasswordValidator;
 import Utility.UserNameValidator;
 import Utility.Validator;
-import other.User;
+import User.User;
 
 public class Authenticator {
     OTPSender otpSender = new OTPSender();

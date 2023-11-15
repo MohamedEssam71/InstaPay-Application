@@ -1,6 +1,6 @@
 package Application;
 
-import other.User;
+import User.User;
 
 import java.util.Map;
 
