@@ -1,16 +1,19 @@
 package Provider;
 
+import User.ProviderName;
+import User.ProviderType;
+
 import java.util.Objects;
 
-class ProviderFactory {
-    public Provider createProvider(String type, String providerName) {
-        if (Objects.equals(type, "bank")) {
-            return new Bank(providerName);
-        } else if (Objects.equals(type, "wallet")) {
-            if (Objects.equals(providerName, "vodafone cash")) {
-                return new VodafoneCash(providerName);
-            } else if (Objects.equals(providerName, "fawry")) {
-                return new Fawry(providerName);
+public class ProviderFactory {
+    public static Provider createProvider(ProviderType type, ProviderName providerName) {
+        if (type == ProviderType.BANK) {
+            return new Bank();
+        } else if (type == ProviderType.WALLET) {
+            if (providerName == ProviderName.VODAFONECASH) {
+                return new VodafoneCash();
+            } else if (providerName == ProviderName.FAWRY) {
+                return new Fawry();
             } else {
                 return null;
             }

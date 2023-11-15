@@ -8,9 +8,6 @@ import other.*;
 import API.*;
 
 public class Bank extends Provider{
-    public Bank(String name){
-        super(name);
-    }
 
     @java.lang.Override
     public Double inquireBalance(Account account) {

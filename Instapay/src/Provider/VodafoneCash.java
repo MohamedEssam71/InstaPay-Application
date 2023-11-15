@@ -6,10 +6,6 @@ import API.VodafoneCashAPI;
 import other.*;
 
 public class VodafoneCash extends WalletProvider{
-    public VodafoneCash(String name){
-        super(name);
-    }
-
     public Double inquireBalance(Account account) {
         final Map<Object, Object> response = VodafoneCashAPI.inquireBalance(account.getProviderNumber());
         return (Double) response.get("balance");
