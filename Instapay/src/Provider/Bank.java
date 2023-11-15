@@ -2,6 +2,7 @@ package Provider;
 import java.util.Map;
 
 import API.BankAPI;
+import API.VodafoneCashAPI;
 import Bill.Bill;
 import User.Account;
 
@@ -25,5 +26,10 @@ public class Bank extends Provider{
     @java.lang.Override
     public Map<Object, Object> payBill(Account account, Bill bill) {
         return BankAPI.payBill(account.getData("number").toString(), bill.getBillNumber());
+    }
+
+    @java.lang.Override
+    public Map<Object, Object> accountExists(Account account) {
+        return VodafoneCashAPI.accountExists(account.getData("number").toString());
     }
 }

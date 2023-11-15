@@ -3,6 +3,7 @@ package Provider;
 import java.util.Map;
 
 import API.FawryAPI;
+import API.VodafoneCashAPI;
 import Bill.Bill;
 import User.Account;
 
@@ -24,5 +25,10 @@ public class Fawry extends WalletProvider{
     @java.lang.Override
     public Map<Object, Object> payBill(Account account, Bill bill) {
         return FawryAPI.payBill(account.getData("number").toString(), bill.getBillNumber());
+    }
+
+    @java.lang.Override
+    public Map<Object, Object> accountExists(Account account) {
+        return VodafoneCashAPI.accountExists(account.getData("number").toString());
     }
 }

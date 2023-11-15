@@ -15,6 +15,7 @@ abstract public class Provider {
         return null;
     }
 
-
     abstract public Map<Object, Object> payBill(Account account, Bill bill);
+
+    abstract public Map<Object, Object> accountExists(Account account);
 }

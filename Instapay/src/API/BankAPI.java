@@ -10,24 +10,35 @@ public class BankAPI {
         return response;
     }
 
-    static public Map<Object, Object> transferToBank(String sender, String receiver){
-        return generateFakeResponse();
-    }
-    static public Map<Object, Object> transferToWallet(String sender, String receiver){
-        return generateFakeResponse();
-    }
-    static public Map<Object, Object> payBill(String number, String billNumber){
+    static public Map<Object, Object> transferToBank(String sender, String receiver) {
         return generateFakeResponse();
     }
 
+    static public Map<Object, Object> transferToWallet(String sender, String receiver) {
+        return generateFakeResponse();
+    }
+
+    static public Map<Object, Object> payBill(String number, String billNumber) {
+        return generateFakeResponse();
+    }
+
+    static public Map<Object, Object> accountExists(String number) {
+        Map<Object, Object> response = generateFakeResponse();
+        int status = (int) (Math.random() % 2);
+        if (status == 1) {
+            response.put("exists", false);
+        } else {
+            response.put("exists", true);
+        }
+        return response;
+    }
     static private Map<Object, Object> generateFakeResponse() {
         Map<Object, Object> response = new HashMap<>();
         int status = (int) (Math.random() % 2);
-        if(status == 1){
+        if (status == 1) {
             response.put("status", "success");
             response.put("transactionCode", String.valueOf(Math.random() % 20000));
-        }
-        else{
+        } else {
             response.put("status", "failed");
             response.put("message", "Transaction failed, please try again");
         }
