@@ -1,4 +1,4 @@
-package SignUpPackage;
+package GUI;
 import java.util.Scanner;
 
 public class BankSignUp implements SignUpStrategy{
