@@ -9,19 +9,15 @@ public class BankAPI {
         response.put("balance", (Math.random() * 50000) + 10000);
         return response;
     }
-
     static public Map<Object, Object> transferToBank(String sender, String receiver) {
         return generateFakeResponse();
     }
-
     static public Map<Object, Object> transferToWallet(String sender, String receiver) {
         return generateFakeResponse();
     }
-
     static public Map<Object, Object> payBill(String number, String billNumber) {
         return generateFakeResponse();
     }
-
     static public Map<Object, Object> accountExists(String number) {
         Map<Object, Object> response = generateFakeResponse();
         int status = (int) (Math.random() % 2);
