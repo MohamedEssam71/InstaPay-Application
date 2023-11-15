@@ -28,7 +28,8 @@ public class Fawry extends WalletProvider{
     }
 
     @java.lang.Override
-    public Map<Object, Object> accountExists(Account account) {
-        return VodafoneCashAPI.accountExists(account.getData("number").toString());
+    public boolean accountExists(Account account) {
+        Map<Object, Object> response = FawryAPI.accountExists(account.getData("number").toString());
+        return response.get("exists") == "true";
     }
 }
