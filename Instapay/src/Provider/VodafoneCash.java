@@ -23,9 +23,4 @@ public class VodafoneCash extends WalletProvider {
         return VodafoneCashAPI.payBill(account.getData("number").toString(), bill.getBillNumber());
     }
 
-    @java.lang.Override
-    public boolean accountExists(Account account) {
-        Map<Object, Object> response = VodafoneCashAPI.accountExists(account.getData("number").toString());
-        return response.get("exists") == "true";
-    }
 }

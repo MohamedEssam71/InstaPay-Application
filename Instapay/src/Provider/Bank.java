@@ -27,10 +27,4 @@ public class Bank extends Provider{
     public Map<Object, Object> payBill(Account account, Bill bill) {
         return BankAPI.payBill(account.getData("number").toString(), bill.getBillNumber());
     }
-
-    @java.lang.Override
-    public boolean accountExists(Account account) {
-        Map<Object, Object> response = BankAPI.accountExists(account.getData("number").toString());
-        return response.get("exists") == "true";
-    }
 }
