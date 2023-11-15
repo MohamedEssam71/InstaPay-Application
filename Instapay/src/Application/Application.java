@@ -10,6 +10,7 @@ import java.util.Map;
 
 
 public class Application {
+    Authenticator auth = new Authenticator();
     public boolean payBill(String billType, String billNumber) {
         if (billType != "electricity" && billType != "water" && billType != "gas")
             return false;
@@ -17,10 +18,13 @@ public class Application {
         return BillPayer.payBill(bill);
     }
 
-    public boolean signUp(String userName, String password, String accountNumber, String phoneNumber){
+    public void sendOTP(String phoneNumber){
+        auth.sendOTP(new User(null, null, null, phoneNumber));
+    }
+
+    public boolean signUp(String userName, String password, String accountNumber, String phoneNumber, String otp){
         User user = new User(userName, password, accountNumber, phoneNumber);
-        Database.addUser(user);
-        return true;
+        return auth.signUp(user, otp);
     }
 
     public boolean transferToAccount(Double amount, String accountName) {

@@ -14,8 +14,9 @@ public class SessionManager {
 
     public static boolean signIn(String username, String password) {
         User user = Database.getUser(username);
-/*        if(user == null || !Objects.equals(user.getPassword(), password))
-            return false;*/
+        if(user == null || !Objects.equals(user.getPassword(), password))
+            return false;
+        currentUser = user;
         return true;
     }
 }

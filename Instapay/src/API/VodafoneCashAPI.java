@@ -20,13 +20,7 @@ public class VodafoneCashAPI {
 
     static private Map<Object, Object> generateFakeResponse() {
         Map<Object, Object> response = new HashMap<>();
-        int status = (int) (Math.random() % 2);
-        if (status == 1) {
-            response.put("status", "success");
-        } else {
-            response.put("status", "failed");
-            response.put("message", "Transaction failed, please try again");
-        }
+        response.put("status", "success");
         return response;
     }
 }

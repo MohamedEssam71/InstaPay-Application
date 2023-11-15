@@ -21,20 +21,20 @@ public class GUI {
     private Application application = new Application();
 
     public void menuScreen() {
-        while(true){
-        String dashedLine = "-".repeat(28 + 2);
-        System.out.print('+');
-        System.out.print(dashedLine);
-        System.out.println('+');
-        String mainMenuStr = "|" + " ".repeat(5) + CYAN + " InstaPay PROJECT"
-                + RESET + " ".repeat(8) + "|\n" +
-                "| 1.Log-In" + " ".repeat(21) + "|\n" +
-                "| 2.Register" + " ".repeat(19) + "|\n" +
-                "| 3.Exit" + " ".repeat(23) + "|\n";
-        System.out.print(mainMenuStr);
-        System.out.print('+');
-        System.out.print(dashedLine);
-        System.out.println('+');
+        while (true) {
+            String dashedLine = "-".repeat(28 + 2);
+            System.out.print('+');
+            System.out.print(dashedLine);
+            System.out.println('+');
+            String mainMenuStr = "|" + " ".repeat(5) + CYAN + " InstaPay PROJECT"
+                    + RESET + " ".repeat(8) + "|\n" +
+                    "| 1.Log-In" + " ".repeat(21) + "|\n" +
+                    "| 2.Register" + " ".repeat(19) + "|\n" +
+                    "| 3.Exit" + " ".repeat(23) + "|\n";
+            System.out.print(mainMenuStr);
+            System.out.print('+');
+            System.out.print(dashedLine);
+            System.out.println('+');
 
             Integer option = getInteger("", 3);
             switch (option) {
@@ -62,8 +62,27 @@ public class GUI {
         do {
             String userName = takeUserNameInput();
             String password = takePasswordInput();
-            String phoneNumber = takePhoneNumberInput();
-            isRegistered = application.signUp(userName, password, "111", phoneNumber);
+
+            // implement taking acocunt type
+            Integer typeOption = getInteger("Enter account type:\n1-Bank\n2-Wallet\n", 2);
+            String type = null;
+            switch (typeOption) {
+                case 1 -> type = "Bank";
+                case 2 -> type = "Wallet";
+            }
+
+            BankSignUp signUpScreen = (BankSignUp) SignUpFactory.createSignUpMethod(type);
+            signUpScreen.showSignUpScreen();
+
+            String bankNumber = signUpScreen.getBankNum();
+            String phoneNumber = signUpScreen.getPhoneNum();
+
+            application.sendOTP(phoneNumber);
+
+            System.out.print("Enter OTP sent to your phone: ");
+            String otp = scanner.nextLine();
+
+            isRegistered = application.signUp(userName, password, bankNumber, phoneNumber, otp);
         } while (!isRegistered);
     }
 
@@ -84,15 +103,35 @@ public class GUI {
         }
     }
 
-    public Integer signedInMenuScreen() {
-        String form = "";
-        form += " ".repeat(6) + " <<< Available Options >>> \n" +
-                "1. Transfer to Bank. \n" +
-                "2. Transfer to Account.\n" +
-                "3. Transfer to Wallet.\n" +
-                "4. Pay Bill.\n" +
-                "5. Logout.\n";
-        return getInteger(form, 5);
+    public void signedInMenuScreen() {
+        while (true) {
+            String form = "";
+            form += " ".repeat(6) + " <<< Available Options >>> \n" +
+                    "1. Transfer to Bank. \n" +
+                    "2. Transfer to Account.\n" +
+                    "3. Transfer to Wallet.\n" +
+                    "4. Pay Bill.\n" +
+                    "5. Logout.\n";
+            Integer option = getInteger(form, 5);
+            switch (option) {
+                case 1 -> {
+                    transferToBank();
+                }
+                case 2 -> {
+                    transferToAccount();
+                }
+                case 3 -> {
+                    transferToWallet();
+                }
+                case 4 -> {
+                    payBillScreen();
+                }
+                case 5 -> {
+                    return;
+                }
+            }
+        }
+
     }
 
     public void payBillScreen() {
@@ -119,12 +158,12 @@ public class GUI {
         }
     }
 
-    public Integer confirmTransactionScreen() {
+    public boolean confirmTransactionScreen() {
         String form = "";
         form += " ".repeat(6) + " <<< Available Options >>> \n" +
                 "1. Confirm. \n" +
                 "2. Cancel\n";
-        return getInteger(form, 2);
+        return getInteger(form, 2) == 1;
     }
 
     public void loadProfileScreen() {
@@ -142,8 +181,14 @@ public class GUI {
         double amount = scanner.nextInt();
 
         System.out.print("Enter receiver Account number: ");
-        String receiverAccountNumber = scanner.nextLine();
-        application.transferToBank(amount, receiverAccountNumber);
+        String receiverAccountNumber = scanner.next();
+        if (confirmTransactionScreen()) {
+            if (application.transferToBank(amount, receiverAccountNumber)) {
+                System.out.println("Transaction succeeded");
+            } else {
+                System.out.println("Transaction failed");
+            }
+        }
     }
 
     public void transferToAccount() {
@@ -152,7 +197,13 @@ public class GUI {
 
         System.out.print("Enter receiver Account name: ");
         String receiverAccountName = scanner.nextLine();
-        application.transferToAccount(amount, receiverAccountName);
+        if (confirmTransactionScreen()) {
+            if (application.transferToAccount(amount, receiverAccountName)) {
+                System.out.println("Transaction succeeded");
+            } else {
+                System.out.println("Transaction failed");
+            }
+        }
     }
 
     public void transferToWallet() {
@@ -161,7 +212,13 @@ public class GUI {
 
         System.out.print("Enter receiver Account number: ");
         String receiverAccountNumber = scanner.nextLine();
-        application.transferToWallet(amount, receiverAccountNumber);
+        if (confirmTransactionScreen()) {
+            if (application.transferToWallet(amount, receiverAccountNumber)) {
+                System.out.println("Transaction succeeded");
+            } else {
+                System.out.println("Transaction failed");
+            }
+        }
     }
 
     public void exitScreen() {
@@ -251,13 +308,11 @@ public class GUI {
             if (!pass.equals(passConfirm)) {
                 displayMessage("Passwords Don't Match!", 'R');
             } else {
-                String encodedPassword = Base64.getEncoder().encodeToString(pass.getBytes());
-                return encodedPassword;
+                return pass;
             }
         } while (!pass.equals(passConfirm));
 
-        String encodedPassword = Base64.getEncoder().encodeToString(pass.getBytes());
-        return encodedPassword;
+        return pass;
     }
 
     public String takePhoneNumberInput() {
