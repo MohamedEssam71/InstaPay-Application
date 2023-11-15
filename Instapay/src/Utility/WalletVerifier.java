@@ -1,13 +1,12 @@
 package Utility;
 
-import Provider.ProviderFactory;
-import Provider.Provider;
-import other.Account;
+import API.WalletAPI;
 
-public class WalletVerifier {
-    public boolean verify(Account account) {
-        Provider provider = ProviderFactory.createProvider(account.providerType, account.providerName);
+import java.util.Map;
 
-
+public class WalletVerifier implements Verifier {
+    public boolean verify(String walletNumber) {
+        Map<Object, Object> response = WalletAPI.accountExists(walletNumber);
+        return response.get("exists") == "true";
     }
 }
