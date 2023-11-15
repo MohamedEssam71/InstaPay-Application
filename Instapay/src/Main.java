@@ -1,5 +1,10 @@
+import BillPackage.Bill;
+import BillPackage.BillFactory;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        BillFactory billFactory = new BillFactory();
+        Bill bill = billFactory.create("Gas","111");
+        bill.display();
     }
 }
