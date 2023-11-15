@@ -1,4 +1,4 @@
-package BillPackage;
+package Bill;
 
 public class BillPayer {
     public void payBill(Bill bill){

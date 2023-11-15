@@ -13,8 +13,7 @@ public class OTPSender {
         if (otp == null) {
             return;
         }
-        OTPAPI api = new OTPAPI();
-        api.sendOTP(phoneNumber, this.otp);
+        OTPAPI.sendOTP(phoneNumber, this.otp);
     }
 
     void generateOTP() {
