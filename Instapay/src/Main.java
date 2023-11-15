@@ -1,10 +1,13 @@
-import BillPackage.Bill;
-import BillPackage.BillFactory;
+import Provider.*;
+import other.Account;
 
 public class Main {
     public static void main(String[] args) {
-//        BillFactory billFactory = new BillFactory();
-//        Bill bill = billFactory.create("Electricity","222");
-//        bill.display();
+        Provider vodafone = new VodafoneCash("vodafone cash");
+        Provider fawry = new Fawry("fawry");
+        Provider bank = new Bank("bank");
+        for (Provider provider : new Provider[]{vodafone, fawry, bank}) {
+            System.out.println(provider.inquireBalance(new Account("01000000000")));
+        }
     }
 }
