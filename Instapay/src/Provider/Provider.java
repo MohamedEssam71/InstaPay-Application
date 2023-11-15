@@ -1,7 +1,7 @@
 package Provider;
 
-import other.Account;
-import other.Bill;
+import Bill.Bill;
+import User.Account;
 
 import java.util.Map;
 

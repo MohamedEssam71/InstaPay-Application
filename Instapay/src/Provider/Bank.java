@@ -1,31 +1,29 @@
 package Provider;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.function.BiFunction;
 
-import other.*;
-import API.*;
+import API.BankAPI;
+import Bill.Bill;
+import User.Account;
 
 public class Bank extends Provider{
 
     @java.lang.Override
     public Double inquireBalance(Account account) {
-        Map<Object, Object> response = BankAPI.inquireBalance(account.getProviderNumber());
+        Map<Object, Object> response = BankAPI.inquireBalance(account.getData("number").toString());
         return (Double) response.get("balance");
     }
 
     @java.lang.Override
     public Map<Object, Object> transferToWallet(Account senderAccount, String receiverNumber) {
-        return BankAPI.transferToWallet(senderAccount.getProviderNumber(), receiverNumber);
+        return BankAPI.transferToWallet(senderAccount.getData("number").toString(), receiverNumber);
     }
 
     public Map<Object, Object> transferToBank(Account senderAccount, String receiverNumber){
-        return BankAPI.transferToBank(senderAccount.getProviderNumber(), receiverNumber);
+        return BankAPI.transferToBank(senderAccount.getData("number").toString(), receiverNumber);
     }
 
     @java.lang.Override
     public Map<Object, Object> payBill(Account account, Bill bill) {
-        return BankAPI.payBill(account.getProviderNumber(), bill.getBillNumber());
+        return BankAPI.payBill(account.getData("number").toString(), bill.getBillNumber());
     }
 }
