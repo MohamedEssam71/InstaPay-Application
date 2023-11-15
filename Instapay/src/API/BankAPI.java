@@ -16,7 +16,7 @@ public class BankAPI {
     public Map<Object, Object> transferToWallet(String sender, String receiver){
         return generateFakeResponse();
     }
-    public Map<Object, Object> payBill(String billNumber){
+    public Map<Object, Object> payBill(String number, String billNumber){
         return generateFakeResponse();
     }
 

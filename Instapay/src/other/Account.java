@@ -1,9 +1,9 @@
 package other;
 
 public class Account {
-    String BankNumber;
+    String ProviderNumber;
 
-    public String getBankNumber(){
-        return BankNumber;
+    public String getProviderNumber(){
+        return ProviderNumber;
     }
 }

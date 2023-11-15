@@ -14,24 +14,24 @@ public class Bank extends Provider{
     @java.lang.Override
     public Double inquireBalance(Account account) {
         BankAPI bankAPI = new BankAPI();
-        final Map<Object, Object> response = bankAPI.inquireBalance(account.getBankNumber());
+        final Map<Object, Object> response = bankAPI.inquireBalance(account.getProviderNumber());
         return (Double) response.get("balance");
     }
 
     @java.lang.Override
-    public Map<Object, Object> transferToWallet(String senderBankNumber, String receiverBankNumber) {
+    public Map<Object, Object> transferToWallet(Account senderAccount, String receiverNumber) {
         BankAPI bankAPI = new BankAPI();
-        return bankAPI.transferToWallet(senderBankNumber, receiverBankNumber);
+        return bankAPI.transferToWallet(senderAccount.getProviderNumber(), receiverNumber);
     }
 
-    public Map<Object, Object> transferToBank(String senderBankNumber, String receiverBankNumber){
+    public Map<Object, Object> transferToBank(Account senderAccount, String receiverNumber){
         BankAPI bankAPI = new BankAPI();
-        return bankAPI.transferToBank(senderBankNumber, receiverBankNumber);
+        return bankAPI.transferToBank(senderAccount.getProviderNumber(), receiverNumber);
     }
 
     @java.lang.Override
-    public Map<Object, Object> payBill(Bill bill) {
+    public Map<Object, Object> payBill(Account account, Bill bill) {
         BankAPI bankAPI = new BankAPI();
-        return bankAPI.payBill(bill.getBillNumber());
+        return bankAPI.payBill(account.getProviderNumber(), bill.getBillNumber());
     }
 }
