@@ -6,7 +6,7 @@ import java.util.Map;
 public class FawryAPI {
     static public Map<Object, Object> inquireBalance(String accountNumber) {
         Map<Object, Object> response = new HashMap<>();
-        response.put("balance", Math.random() % 30000);
+        response.put("balance", (Math.random() * 50000) + 10000);
         return response;
     }
     static public Map<Object, Object> transferToWallet(String sender, String receiver){
