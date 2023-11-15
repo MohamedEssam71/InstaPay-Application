@@ -11,21 +11,18 @@ public class VodafoneCash extends WalletProvider{
     }
 
     public Double inquireBalance(Account account) {
-        VodafoneCashAPI vodafoneCashAPI = new VodafoneCashAPI();
-        final Map<Object, Object> response = vodafoneCashAPI.inquireBalance(account.getBankNumber());
+        final Map<Object, Object> response = VodafoneCashAPI.inquireBalance(account.getProviderNumber());
         return (Double) response.get("balance");
     }
 
     @java.lang.Override
-    public Map<Object, Object> transferToWallet(String senderWalletNumber, String receiverWalletNumber) {
-        VodafoneCashAPI vodafoneCashAPI = new VodafoneCashAPI();
-        return vodafoneCashAPI.transferToWallet(senderWalletNumber, receiverWalletNumber);
+    public Map<Object, Object> transferToWallet(Account senderAccount, String receiverNumber) {
+        return VodafoneCashAPI.transferToWallet(senderAccount.getProviderNumber(), receiverNumber);
 
     }
 
     @java.lang.Override
-    public Map<Object, Object> payBill(Bill bill) {
-        VodafoneCashAPI vodafoneCashAPI = new VodafoneCashAPI();
-        return vodafoneCashAPI.payBill(bill.getBillNumber());
+    public Map<Object, Object> payBill(Account account, Bill bill) {
+        return VodafoneCashAPI.payBill(account.getProviderNumber(), bill.getBillNumber());
     }
 }

@@ -1,9 +1,11 @@
 package other;
 
 public class Account {
-    String BankNumber;
-
-    public String getBankNumber(){
-        return BankNumber;
+    String ProviderNumber;
+    public Account(String ProviderNumber){
+        this.ProviderNumber = ProviderNumber;
+    }
+    public String getProviderNumber(){
+        return ProviderNumber;
     }
 }
