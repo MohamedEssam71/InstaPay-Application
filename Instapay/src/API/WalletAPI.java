@@ -3,19 +3,17 @@ package API;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VodafoneCashAPI {
-    static public Map<Object, Object> inquireBalance(String accountNumber) {
-        Map<Object, Object> response = new HashMap<>();
-        response.put("balance", (Math.random() * 50000) + 10000);
+public class WalletAPI {
+    static public Map<Object, Object> accountExists(String number) {
+        Map<Object, Object> response = generateFakeResponse();
+        response.put("number", number);
+        int status = (int) (Math.random() % 2);
+        if (response.get("status") == "success") {
+            response.put("exists", true);
+        } else {
+            response.put("exists", false);
+        }
         return response;
-    }
-
-    static public Map<Object, Object> transferToWallet(String sender, String receiver) {
-        return generateFakeResponse();
-    }
-
-    static public Map<Object, Object> payBill(String number, String billNumber) {
-        return generateFakeResponse();
     }
 
     static private Map<Object, Object> generateFakeResponse() {
