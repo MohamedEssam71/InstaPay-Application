@@ -6,13 +6,13 @@ import User.User;
 import java.util.Objects;
 
 public class SessionManager {
-    User currentUser;
+    static User currentUser;
 
-    public User getCurrentUser() {
+    public static User getCurrentUser() {
         return currentUser;
     }
 
-    public boolean signIn(String username, String password) {
+    public static boolean signIn(String username, String password) {
         User user = Database.getUser(username);
         if(user == null || !Objects.equals(user.getPassword(), password))
             return false;
