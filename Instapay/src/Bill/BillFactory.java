@@ -5,11 +5,11 @@ import java.util.*;
 public class BillFactory {
 
 
-    public Bill create(String billType, String billNumber){
-        return new Bill(billNumber,fetchBill(billType, billNumber));
+    public static Bill create(String billType, String billNumber){
+        return new Bill(billNumber, fetchBill(billType, billNumber));
     }
 
-    public HashMap<Object,Object> fetchBill(String billType, String billNumber){
+    public static HashMap<Object,Object> fetchBill(String billType, String billNumber){
         HashMap<Object, Object> billContent = new HashMap<>();
 
         String name, number, provider, date;
@@ -57,7 +57,7 @@ public class BillFactory {
     }
 
     //Fake Random Date for bill content
-    private String randomDate(){
+    private static String randomDate(){
         Random random = new Random();
 
         // Define a start and end date range
