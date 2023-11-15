@@ -11,13 +11,20 @@ public class User {
     public Provider getProvider() {
         return ProviderFactory.createProvider(account.getProviderType(), account.getProviderName());
     }
+
     public String getName() {
         return name;
     }
+
     public String getPassword() {
         return password;
     }
+
     public String getMobileNumber() {
         return mobileNumber;
+    }
+
+    public Account getAccount() {
+        return account;
     }
 }
