@@ -14,21 +14,18 @@ public class Fawry extends WalletProvider{
 
     @java.lang.Override
     public Double inquireBalance(Account account) {
-        FawryAPI fawryAPI = new FawryAPI();
-        final Map<Object, Object> response = fawryAPI.inquireBalance(account.getProviderNumber());
+        final Map<Object, Object> response = FawryAPI.inquireBalance(account.getProviderNumber());
         return (Double) response.get("balance");
     }
 
     @java.lang.Override
     public Map<Object, Object> transferToWallet(Account senderAccount, String receiverWalletNumber) {
-        FawryAPI fawryAPI = new FawryAPI();
-        return fawryAPI.transferToWallet(senderAccount.getProviderNumber(), receiverWalletNumber);
+        return FawryAPI.transferToWallet(senderAccount.getProviderNumber(), receiverWalletNumber);
 
     }
 
     @java.lang.Override
     public Map<Object, Object> payBill(Account account, Bill bill) {
-        FawryAPI fawryAPI = new FawryAPI();
-        return fawryAPI.payBill(account.getProviderNumber(), bill.getBillNumber());
+        return FawryAPI.payBill(account.getProviderNumber(), bill.getBillNumber());
     }
 }
