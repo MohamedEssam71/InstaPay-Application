@@ -1,4 +1,5 @@
 package GUI;
+
 import Authentication.SessionManager;
 import Utility.PasswordValidator;
 import Utility.PhoneNumberValidator;
@@ -19,7 +20,8 @@ public class GUI {
     private final Scanner scanner = new Scanner(System.in);
     private Application application = new Application();
 
-    public void menuScreen(){
+    public void menuScreen() {
+        while(true){
         String dashedLine = "-".repeat(28 + 2);
         System.out.print('+');
         System.out.print(dashedLine);
@@ -28,55 +30,61 @@ public class GUI {
                 + RESET + " ".repeat(8) + "|\n" +
                 "| 1.Log-In" + " ".repeat(21) + "|\n" +
                 "| 2.Register" + " ".repeat(19) + "|\n" +
-                "| 3.Exit" + " ".repeat(23) + "|\n" ;
+                "| 3.Exit" + " ".repeat(23) + "|\n";
         System.out.print(mainMenuStr);
         System.out.print('+');
         System.out.print(dashedLine);
         System.out.println('+');
 
-        Integer option = getInteger("",3);
+            Integer option = getInteger("", 3);
+            switch (option) {
+                case 1 -> {
+                    loginScreen();
+                }
+                case 2 -> {
+                    signUpScreen();
+                }
+                case 3 -> {
+                    exitScreen();
+                    return;
+                }
+            }
+        }
     }
 
-    public void signUpScreen(){
-        String form = " ".repeat(20)+ "<<< Registration Form Page >>>\n";
+    public void signUpScreen() {
+        String form = " ".repeat(20) + "<<< Registration Form Page >>>\n";
         form += " Some Notes: \n Password Rules: at least one small, capital, number, symbol is needed" +
                 " \n Phone Rules: must start with valid prefixes eg:{010,011,012,015} \n";
-        displayMessage(form,'W');
+        displayMessage(form, 'W');
 
         boolean isRegistered = false;
-        do{
+        do {
             String userName = takeUserNameInput();
             String password = takePasswordInput();
             String phoneNumber = takePhoneNumberInput();
-
-            // User save these Values If right ?!
-
-            scanner.nextLine();
-        }while(!isRegistered);
+            isRegistered = application.signUp(userName, password, "111", phoneNumber);
+        } while (!isRegistered);
     }
 
-    public void loginScreen(){
-        SessionManager sessionManager = new SessionManager();
-
-        displayMessage("Welcome to Login Page",'W');
+    public void loginScreen() {
+        displayMessage("Welcome to Login Page", 'W');
         System.out.print("Enter Username: ");
         String userName = scanner.nextLine();
 
         System.out.print("Enter Password: ");
         String password = scanner.nextLine();
 
-        String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes());
-
-        boolean isFound = sessionManager.signIn(userName,encodedPassword);
-        if(isFound){
+        boolean isFound = SessionManager.signIn(userName, password);
+        if (isFound) {
             displayMessage("Welcome, " + userName, 'C');
-        }
-        else{
+            signedInMenuScreen();
+        } else {
             loginFailed();
         }
     }
 
-    public Integer signedInMenuScreen(){
+    public Integer signedInMenuScreen() {
         String form = "";
         form += " ".repeat(6) + " <<< Available Options >>> \n" +
                 "1. Transfer to Bank. \n" +
@@ -84,83 +92,98 @@ public class GUI {
                 "3. Transfer to Wallet.\n" +
                 "4. Pay Bill.\n" +
                 "5. Logout.\n";
-        return getInteger(form,5);
+        return getInteger(form, 5);
     }
 
-    public Integer payBillScreen(){
+    public void payBillScreen() {
         String form = "";
         form += " ".repeat(6) + " <<< Available Options >>> \n" +
                 "1. Electricity bill \n" +
                 "2. Water bill\n" +
                 "3. Gas bill.\n" +
                 "4. Go-Back.\n";
-        return getInteger(form,4);
+        Integer input = getInteger(form, 4);
+        switch (input) {
+            case 1 -> {
+                application.payBill("electricty", "111");
+            }
+            case 2 -> {
+                application.payBill("water", "222");
+            }
+            case 3 -> {
+                application.payBill("gas", "123");
+            }
+            case 4 -> {
+                return;
+            }
+        }
     }
 
-    public Integer confirmTransactionScreen(){
+    public Integer confirmTransactionScreen() {
         String form = "";
         form += " ".repeat(6) + " <<< Available Options >>> \n" +
                 "1. Confirm. \n" +
                 "2. Cancel\n";
-        return getInteger(form,2);
+        return getInteger(form, 2);
     }
 
-    public void loadProfileScreen(){
+    public void loadProfileScreen() {
         String form = "";
         form += "Name: " + SessionManager.getCurrentUser().getName() + "\n"
-                + "mobile: " + SessionManager.getCurrentUser().getMobileNumber()+
+                + "mobile: " + SessionManager.getCurrentUser().getMobileNumber() +
                 "\n" + "Provider Name: " + SessionManager.getCurrentUser().getAccount().getProviderName()
                 + "\n" + "Provider Type: "
                 + SessionManager.getCurrentUser().getAccount().getProviderType() + "\n";
-        displayMessage(form,'W');
+        displayMessage(form, 'W');
     }
 
-    public void transferToBank(){
+    public void transferToBank() {
         System.out.print("Enter amount to be transferred: ");
         double amount = scanner.nextInt();
 
         System.out.print("Enter receiver Account number: ");
         String receiverAccountNumber = scanner.nextLine();
-//        application.transferToBank();
+        application.transferToBank(amount, receiverAccountNumber);
     }
 
-    public void transferToAccount(){
+    public void transferToAccount() {
+        System.out.print("Enter amount to be transferred: ");
+        double amount = scanner.nextInt();
+
+        System.out.print("Enter receiver Account name: ");
+        String receiverAccountName = scanner.nextLine();
+        application.transferToAccount(amount, receiverAccountName);
+    }
+
+    public void transferToWallet() {
         System.out.print("Enter amount to be transferred: ");
         double amount = scanner.nextInt();
 
         System.out.print("Enter receiver Account number: ");
         String receiverAccountNumber = scanner.nextLine();
-//        application.transferToAccount();
+        application.transferToWallet(amount, receiverAccountNumber);
     }
 
-    public void transferToWallet(){
-        System.out.print("Enter amount to be transferred: ");
-        double amount = scanner.nextInt();
-
-        System.out.print("Enter receiver Account number: ");
-        String receiverAccountNumber = scanner.nextLine();
-//        application.transferToWallet();
-    }
-
-    public void exitScreen(){
+    public void exitScreen() {
         String exitStr = "Thank You For Using our Application ! \n" +
                 "Authors: \n  " +
                 "Mohamed Essam. \n  " +
                 "Alan Samir. \n  " +
                 "Mina Hakim. \n" +
                 "Salah Eddin. \n";
-        displayMessage(exitStr,'G');
+        displayMessage(exitStr, 'G');
     }
 
-    public void loginFailed(){
-        displayMessage("User isn't Found in the System !",'R');
-    }
-    public void userNotRegistered(){
-        displayMessage("Can't Access, You are not registered! \n",'R');
+    public void loginFailed() {
+        displayMessage("User isn't Found in the System !", 'R');
     }
 
-    public void displayMessage(String message, char color){
-        if(message.isEmpty()) {
+    public void userNotRegistered() {
+        displayMessage("Can't Access, You are not registered! \n", 'R');
+    }
+
+    public void displayMessage(String message, char color) {
+        if (message.isEmpty()) {
             return;
         }
         String[] strArr = message.split("\n");
@@ -201,12 +224,14 @@ public class GUI {
         System.out.print(dashedLine);
         System.out.println('+');
     }
-    public String takeUserNameInput(){
+
+    public String takeUserNameInput() {
         System.out.print("Enter UserName: ");
         String userName = scanner.nextLine();
         return userName;
     }
-    public String takePasswordInput(){
+
+    public String takePasswordInput() {
         Validator validator = new PasswordValidator();
         String pass, passConfirm;
         do {
@@ -234,7 +259,8 @@ public class GUI {
         String encodedPassword = Base64.getEncoder().encodeToString(pass.getBytes());
         return encodedPassword;
     }
-    public String takePhoneNumberInput(){
+
+    public String takePhoneNumberInput() {
         Validator validator = new PhoneNumberValidator();
         boolean isValidPhone;
         do {
@@ -249,47 +275,49 @@ public class GUI {
         } while (!isValidPhone);
         return null;
     }
-    public boolean checkCertainNumber(int chosenOption, ArrayList<Integer> availableOptions){
-        for(int i : availableOptions){
-            if(chosenOption != i){
+
+    public boolean checkCertainNumber(int chosenOption, ArrayList<Integer> availableOptions) {
+        for (int i : availableOptions) {
+            if (chosenOption != i) {
                 continue;
             }
             return true;
         }
         scanner.nextLine();
-        displayMessage("Option is not available",'R');
+        displayMessage("Option is not available", 'R');
         return false;
     }
-    public void validateIntegerInput(String option){
+
+    public void validateIntegerInput(String option) {
         boolean isInt = false;
 
-        while(!isInt){
+        while (!isInt) {
             try {
                 System.out.print(option);
                 isInt = scanner.hasNextInt();
-                if(!isInt) throw new IOException();
-            }
-            catch (Exception err){
+                if (!isInt) throw new IOException();
+            } catch (Exception err) {
                 scanner.nextLine();
-                displayMessage("Please Enter a Number not String !",'R');
+                displayMessage("Please Enter a Number not String !", 'R');
             }
         }
     }
-    public Integer getInteger(String info,int optionSize) {
-        displayMessage(info,'W');
+
+    public Integer getInteger(String info, int optionSize) {
+        displayMessage(info, 'W');
 
         ArrayList<Integer> optionsNumber = new ArrayList<>();
-        for(int i = 1; i <= optionSize; ++i){
+        for (int i = 1; i <= optionSize; ++i) {
             optionsNumber.add(i);
         }
 
         boolean isValidInput = false;
-        while(!isValidInput){
+        while (!isValidInput) {
             validateIntegerInput("Enter Option Number: ");
             Integer choice = scanner.nextInt();
-            isValidInput = checkCertainNumber(choice,optionsNumber);
+            isValidInput = checkCertainNumber(choice, optionsNumber);
 
-            if(isValidInput){
+            if (isValidInput) {
                 scanner.nextLine();
                 return choice;
             }
@@ -298,7 +326,8 @@ public class GUI {
     }
 
     public static void main(String[] args) {
+        Database db = new Database();
         GUI gui = new GUI();
-        gui.loadProfileScreen();
+        gui.menuScreen();
     }
 }

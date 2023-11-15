@@ -2,12 +2,12 @@ package User;
 
 import java.util.*;
 
-public abstract class Account {
+public class Account {
     private ProviderType providerType;
     private ProviderName providerName;
     private Map<Object, Object> accountData;
 
-    protected Account(ProviderType providerType, ProviderName providerName, Map<Object, Object> accountData) {
+    public Account(ProviderType providerType, ProviderName providerName, Map<Object, Object> accountData) {
         this.providerType = providerType;
         this.providerName = providerName;
         this.accountData = accountData;

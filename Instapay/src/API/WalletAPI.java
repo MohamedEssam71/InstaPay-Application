@@ -7,7 +7,6 @@ public class WalletAPI {
     static public Map<Object, Object> accountExists(String number) {
         Map<Object, Object> response = generateFakeResponse();
         response.put("number", number);
-        int status = (int) (Math.random() % 2);
         if (response.get("status") == "success") {
             response.put("exists", true);
         } else {
