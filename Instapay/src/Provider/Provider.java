@@ -16,6 +16,4 @@ abstract public class Provider {
     }
 
     abstract public Map<Object, Object> payBill(Account account, Bill bill);
-
-    abstract public boolean accountExists(Account account);
 }
