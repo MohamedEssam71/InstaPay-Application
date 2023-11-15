@@ -22,4 +22,9 @@ public class VodafoneCash extends WalletProvider{
     public Map<Object, Object> payBill(Account account, Bill bill) {
         return VodafoneCashAPI.payBill(account.getData("number").toString(), bill.getBillNumber());
     }
+
+    @java.lang.Override
+    public Map<Object, Object> accountExists(Account account) {
+        return VodafoneCashAPI.accountExists(account.getData("number").toString());
+    }
 }
