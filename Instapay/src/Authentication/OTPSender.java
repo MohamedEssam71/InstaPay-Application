@@ -1,5 +1,7 @@
 package Authentication;
 
+import API.OTPAPI;
+
 import java.text.DecimalFormat;
 import java.util.Objects;
 import java.util.Random;
@@ -8,8 +10,11 @@ public class OTPSender {
     String otp;
 
     void sendOTP(String phoneNumber) {
-        System.out.println("Hello" + phoneNumber + ".");
-        System.out.println("Your Instapay signup OTP is: " + otp);
+        if (otp == null) {
+            return;
+        }
+        OTPAPI api = new OTPAPI();
+        api.sendOTP(phoneNumber, this.otp);
     }
 
     void generateOTP() {
@@ -17,6 +22,9 @@ public class OTPSender {
     }
 
     boolean validateOTP(String otp) {
+        if (this.otp == null) {
+            return false;
+        }
         return Objects.equals(otp, this.otp);
     }
 }
