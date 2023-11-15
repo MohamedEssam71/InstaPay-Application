@@ -1,6 +1,5 @@
-package BillPackage;
+package Bill;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 
 public class Bill {

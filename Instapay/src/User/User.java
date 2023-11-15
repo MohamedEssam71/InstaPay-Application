@@ -6,7 +6,6 @@ public class User {
     private String name;
     private String password;
     private String mobileNumber;
-
     private Account account;
 
     public Provider getProvider() {
