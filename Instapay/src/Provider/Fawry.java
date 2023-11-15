@@ -8,9 +8,6 @@ import other.*;
 
 
 public class Fawry extends WalletProvider{
-    public Fawry(String name){
-        super(name);
-    }
 
     @java.lang.Override
     public Double inquireBalance(Account account) {

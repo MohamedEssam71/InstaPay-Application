@@ -6,11 +6,6 @@ import other.Bill;
 import java.util.Map;
 
 abstract public class Provider {
-    String name;
-
-    public Provider(String name){
-        this.name = name;
-    }
 
     abstract public Double inquireBalance(Account account);
 
