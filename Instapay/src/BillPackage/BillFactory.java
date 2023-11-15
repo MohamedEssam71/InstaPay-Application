@@ -4,20 +4,14 @@ import java.util.*;
 
 public class BillFactory {
 
-    private HashMap<String, String> billContent = new HashMap<>();
 
     public Bill create(String billType, String billNumber){
-        Bill bill;
-        fetchBill(billType);
-        switch (billType){
-            case "Electricity" -> bill = new ElectricityBill(billNumber,billContent);
-            case "Water" -> bill = new WaterBill(billNumber,billContent);
-            case "Gas" -> bill = new GasBill(billNumber,billContent);
-            default -> throw new IllegalStateException("Unexpected value: " + billType);
-        }
-        return bill;
+        return new Bill(billNumber,fetchBill(billType, billNumber));
     }
-    public void fetchBill(String billType){
+
+    public HashMap<Object,Object> fetchBill(String billType, String billNumber){
+        HashMap<Object, Object> billContent = new HashMap<>();
+
         String name, number, provider, date;
         String previousReading, currentReading;
         String totalAmount, customerService;
@@ -26,32 +20,30 @@ public class BillFactory {
         date = randomDate();
         previousReading = String.valueOf(Math.abs(random.nextInt()%1000));
         currentReading = String.valueOf(Math.abs(random.nextInt()%1000));
-        totalAmount = String.valueOf(Math.abs(random.nextInt()%1000)) + " L.E";
+        totalAmount = Math.abs(random.nextInt() % 1000) + " L.E";
         customerService = String.valueOf(Math.abs(random.nextInt()%10000000));
-        switch (billType){
-            case "Electricity":
+        number = billNumber;
+
+        switch (billType) {
+            case "Electricity" -> {
                 name = "Electricity";
-                number = "111";
                 provider = "Cairo Electricity Production Company";
                 previousReading += " KW/Hr";
                 currentReading += " KW/Hr";
-                break;
-            case "Water":
+            }
+            case "Water" -> {
                 name = "Water";
-                number = "222";
                 provider = "Cairo Water Production Company";
                 previousReading += " cu ft";
                 currentReading += " cu ft";
-                break;
-            case "Gas":
+            }
+            case "Gas" -> {
                 name = "Gas";
-                number = "333";
                 provider = "Cairo Gas Production Company";
                 previousReading += " cm3";
                 currentReading += " cm3";
-                break;
-            default:
-                name = provider = number = currentReading = previousReading = "";
+            }
+            default -> name = provider = number = currentReading = previousReading = "";
         }
         billContent.put("Name", name);
         billContent.put("Number", number);
@@ -61,8 +53,10 @@ public class BillFactory {
         billContent.put("Current Reading", currentReading);
         billContent.put("Total Amount", totalAmount);
         billContent.put("Customer Service", customerService);
-
+        return billContent;
     }
+
+    //Fake Random Date for bill content
     private String randomDate(){
         Random random = new Random();
 
@@ -78,16 +72,4 @@ public class BillFactory {
         // Convert the random day back to a LocalDate
         return String.valueOf(LocalDate.ofEpochDay(randomDay));
     }
-    /*
-    Electricity Bill:
-        The name and address of the electricity provider and the customer
-        The bill date and number
-        The meter number and the billing period
-        The previous and current meter readings and the consumption in kilowatt-hours (kWh)
-        The tariff and the total amount charged for the electricity usage
-        The total amount due and the payment methods
-
-     Gas Bill:
-
-     */
 }
