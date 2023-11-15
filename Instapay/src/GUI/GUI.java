@@ -64,10 +64,8 @@ public class GUI {
 
         System.out.print("Enter Password: ");
         String password = scanner.nextLine();
-
-        String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes());
-
-        boolean isFound = sessionManager.signIn(userName,encodedPassword);
+        
+        boolean isFound = sessionManager.signIn(userName,password);
         if(isFound){
             displayMessage("Welcome, " + userName, 'C');
         }
