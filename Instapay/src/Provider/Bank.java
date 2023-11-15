@@ -29,7 +29,8 @@ public class Bank extends Provider{
     }
 
     @java.lang.Override
-    public Map<Object, Object> accountExists(Account account) {
-        return VodafoneCashAPI.accountExists(account.getData("number").toString());
+    public boolean accountExists(Account account) {
+        Map<Object, Object> response = BankAPI.accountExists(account.getData("number").toString());
+        return response.get("exists") == "true";
     }
 }
