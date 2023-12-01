@@ -13,7 +13,7 @@ public class BankSignUp implements SignUpStrategy{
         System.out.print("Enter Phone Number Associated with Bank Account: ");
         phoneNum = sc.nextLine();
     }
-    public String getBankNum() {
+    public String getProviderNum() {
         return bankNum;
     }
 

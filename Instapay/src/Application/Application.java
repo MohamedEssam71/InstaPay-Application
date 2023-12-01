@@ -2,6 +2,7 @@ package Application;
 
 import Authentication.*;
 import Bill.*;
+import GUI.GUI;
 import User.*;
 import Provider.*;
 import Utility.*;
@@ -11,25 +12,33 @@ import java.util.Map;
 
 public class Application {
     Authenticator auth = new Authenticator();
-    public boolean payBill(String billType, String billNumber) {
-        if (billType != "electricity" && billType != "water" && billType != "gas")
-            return false;
-        Bill bill = BillFactory.create(billType, billNumber);
+    public boolean payBill(Bill bill) {
         return BillPayer.payBill(bill);
     }
-
-    public void sendOTP(String phoneNumber){
-        auth.sendOTP(new User(null, null, null, phoneNumber));
+    public Bill showBillContent(String billType, String billNumber){
+        if (billType != "electricity" && billType != "water" && billType != "gas")
+            return null;
+        Bill bill = BillFactory.create(billType, billNumber);
+        return bill;
     }
 
-    public boolean signUp(String userName, String password, String accountNumber, String phoneNumber, String otp){
-        User user = new User(userName, password, accountNumber, phoneNumber);
+    public String sendOTP(String phoneNumber){
+        return auth.sendOTP(new User(null, null, null, phoneNumber,
+                null,null));
+    }
+
+    public boolean signUp(String userName, String password, String accountNumber, String phoneNumber, String otp,
+                          ProviderType providerType, ProviderName providerName){
+        User user = new User(userName, password, accountNumber, phoneNumber, providerType, providerName);
         return auth.signUp(user, otp);
     }
 
     public boolean transferToAccount(Double amount, String accountName) {
         User receiver = Database.getUser(accountName);
         if (receiver == null) {
+            return false;
+        }
+        if(SessionManager.getCurrentUser().getName().equals(receiver.getName())){
             return false;
         }
         Account receiverAccount = receiver.getAccount();

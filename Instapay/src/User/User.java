@@ -11,13 +11,15 @@ public class User {
     private String mobileNumber;
     private Account account;
 
-    public User(String userName, String password, String accountNumber, String phoneNumber) {
+    public User(String userName, String password, String accountNumber, String phoneNumber,
+    ProviderType providerType, ProviderName providerName) {
         name = userName;
         this.password = password;
         mobileNumber = phoneNumber;
         Map<Object, Object> map = new HashMap<>();
         map.put("number", accountNumber);
-        account = new Account(ProviderType.WALLET, ProviderName.FAWRY, map);
+        /// change
+        account = new Account(providerType, providerName, map);
     }
 
     public Provider getProvider() {

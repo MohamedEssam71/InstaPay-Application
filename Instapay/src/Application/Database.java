@@ -13,10 +13,11 @@ public class Database {
         users = new HashMap<String, User>();
     }
 
-    public static void addUser(User user) {
+    public static boolean addUser(User user) {
         if (users.containsKey(user.getName()))
-            return;
+            return false;
         users.put(user.getName(), user);
+        return true;
     }
 
     public static User getUser(String username) {

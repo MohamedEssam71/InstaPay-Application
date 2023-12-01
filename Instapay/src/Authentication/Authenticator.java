@@ -28,16 +28,15 @@ public class Authenticator {
         return verifier.verify(user.getAccount().getData("number").toString());
     }
 
-    public void sendOTP(User user) {
+    public String sendOTP(User user) {
         otpSender.generateOTP();
-        otpSender.sendOTP(user.getMobileNumber());
+       return otpSender.sendOTP(user.getMobileNumber());
     }
 
     public boolean signUp(User user, String otp) {
         if (!validateUserInfo(user) || !verifyUserInfo(user) || !otpSender.validateOTP(otp)) {
             return false;
         }
-        Database.addUser(user);
-        return true;
+        return Database.addUser(user);
     }
 }

@@ -9,11 +9,11 @@ import java.util.Random;
 public class OTPSender {
     String otp;
 
-    void sendOTP(String phoneNumber) {
+    String sendOTP(String phoneNumber) {
         if (otp == null) {
-            return;
+            return null;
         }
-        OTPAPI.sendOTP(phoneNumber, this.otp);
+        return OTPAPI.sendOTP(phoneNumber, this.otp);
     }
 
     void generateOTP() {

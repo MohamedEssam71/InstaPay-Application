@@ -25,19 +25,19 @@ public class BillFactory {
         number = billNumber;
 
         switch (billType) {
-            case "Electricity" -> {
+            case "electricity" -> {
                 name = "Electricity";
                 provider = "Cairo Electricity Production Company";
                 previousReading += " KW/Hr";
                 currentReading += " KW/Hr";
             }
-            case "Water" -> {
+            case "water" -> {
                 name = "Water";
                 provider = "Cairo Water Production Company";
                 previousReading += " cu ft";
                 currentReading += " cu ft";
             }
-            case "Gas" -> {
+            case "gas" -> {
                 name = "Gas";
                 provider = "Cairo Gas Production Company";
                 previousReading += " cm3";

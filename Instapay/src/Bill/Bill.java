@@ -11,15 +11,15 @@ public class Bill {
 
     }
 
-//    public void display(){
-//        System.out.println("Name: " + billContent.get("Name") + "  Number: " + billContent.get("Number"));
-//        System.out.println("Provider: " + billContent.get("Provider"));
-//        System.out.println("Date: " + billContent.get("Date"));
-//        System.out.println("Previous Reading: " + billContent.get("Previous Reading"));
-//        System.out.println("Current Reading: " + billContent.get("Current Reading"));
-//        System.out.println("Total Amount: " + billContent.get("Total Amount"));
-//        System.out.println("Customer Services: " + billContent.get("Customer Service"));
-//    }
+    public String display(){
+        String form = "Name: " + billContent.get("Name") + "  Number: " + billContent.get("Number") +
+                "\n" + "Provider: " + billContent.get("Provider") + "\n" +
+                "Date: " + billContent.get("Date") + "\n" + "Previous Reading: "
+                + billContent.get("Previous Reading") + "\n" + "Current Reading: " +
+                billContent.get("Current Reading") + "\n" + "Total Amount: " + billContent.get("Total Amount")
+                + "\n" + "Customer Services: " + billContent.get("Customer Service") + "\n";
+        return form;
+    }
 
     public String getBillNumber() {
         return billNumber;
